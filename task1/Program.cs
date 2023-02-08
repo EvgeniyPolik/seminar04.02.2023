@@ -1,4 +1,10 @@
-﻿int[,] GetIntRandomArray(int arrayDimension, int startRange = 0, int endRange  = 100)
+﻿int GetIntFromConsole(string message)
+{
+    Console.WriteLine(message);
+    return int.Parse(Console.ReadLine() ?? "");
+}
+
+int[,] GetIntRandomArray(int arrayDimension, int startRange = 0, int endRange  = 100)
 {
     var rnd = new  Random();
     int[,] result =  new int[arrayDimension, arrayDimension];
@@ -8,8 +14,9 @@
     return result;
 }
 
-void PrintArray(int[,] expArray)
+void PrintArray(int[,] expArray, string message)
 {
+    Console.WriteLine(message);
     int lenghtColumn = expArray.GetLength(0);
     int lenghtLine = expArray.GetLength(1);
     for (int i = 0; i < lenghtLine; i++)
@@ -22,6 +29,7 @@ void PrintArray(int[,] expArray)
         }
         Console.WriteLine();
     }
+    Console.WriteLine();
 }
 
 void MixLineInArray(int[,] expArray)
@@ -32,11 +40,8 @@ void MixLineInArray(int[,] expArray)
         (expArray[0, i], expArray[lenghtColumn - 1, i]) = (expArray[lenghtColumn - 1, i], expArray[0, i]);
 }
 
-Console.WriteLine("Введите размерность массива: ");
-var arrayDimension = int.Parse(Console.ReadLine() ?? "");
+var arrayDimension = GetIntFromConsole("Введите размерность массива: ");
 int[,] expArray = GetIntRandomArray(arrayDimension);
-Console.WriteLine("Исходный массив: ");
-PrintArray(expArray);
+PrintArray(expArray, "Исходный массив: ");
 MixLineInArray(expArray);
-Console.WriteLine("Измененный массив: ");
-PrintArray(expArray);
+PrintArray(expArray, "Измененный массив: ");

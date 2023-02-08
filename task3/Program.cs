@@ -1,5 +1,11 @@
 ﻿using System.Text;
 
+int GetIntFromConsole(string message)
+{
+    Console.WriteLine(message);
+    return int.Parse(Console.ReadLine() ?? "");
+}
+
 int[,] GetIntRandomArray(int arrayDimension, int startRange = 0, int endRange  = 100)  // Формирование массива
 {
     var rnd = new  Random();
@@ -10,8 +16,9 @@ int[,] GetIntRandomArray(int arrayDimension, int startRange = 0, int endRange  =
     return result;
 }
 
-void PrintArray(int[,] expArray)  // Печать массива
+void PrintArray(int[,] expArray, string message)  // Печать массива
 {
+    Console.WriteLine(message);
     int lenghtColumn = expArray.GetLength(0);
     int lenghtLine = expArray.GetLength(1);
     for (int i = 0; i < lenghtLine; i++)
@@ -22,9 +29,9 @@ void PrintArray(int[,] expArray)  // Печать массива
             if (j < lenghtColumn - 1)
                 Console.Write("\t");
         }
-
         Console.WriteLine();
     }
+    Console.WriteLine();
 }
 
 string IntArrayToString(int[] line, string sep = " ")  // Сформировать строку из строки массива
@@ -62,15 +69,18 @@ int GetSumLine(int[] line)  // Подсчет суммы элементов в �
     return sum;
 }
 
-Console.WriteLine("Введите размерность массива: ");
-var arrayDimension = int.Parse(Console.ReadLine() ?? "");
-int[,] expArray = GetIntRandomArray(arrayDimension);
-Console.WriteLine("Сформированный массив: ");
-PrintArray(expArray);
-Console.WriteLine();
-foreach (var line in SwipeLine(expArray))
+void PrintSumLine(int[,] expArray)
 {
-    var sum = GetSumLine(line);
-    var strLine = IntArrayToString(line);
-    Console.WriteLine($"Сумма строки: {strLine} равна {sum}");
+    foreach (var line in SwipeLine(expArray))
+    {
+        var sum = GetSumLine(line);
+        var strLine = IntArrayToString(line);
+        Console.WriteLine($"Сумма строки: {strLine} равна {sum}");
+    }
+
 }
+
+var arrayDimension = GetIntFromConsole("Введите размерность массива: ");
+int[,] expArray = GetIntRandomArray(arrayDimension);
+PrintArray(expArray, "Сформированный массив: ");
+PrintSumLine(expArray);
